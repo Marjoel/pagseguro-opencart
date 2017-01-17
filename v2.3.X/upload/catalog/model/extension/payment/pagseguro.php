@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentPagSeguro extends Model {
+class ModelExtensionPaymentpagseguro extends Model {
     public function getMethod($address, $total) {
-		$this->load->language("payment/pagseguro");
+		$this->load->language("extension/payment/pagseguro");
 
 		if($this->show()) {
 			$this->load->model("localisation/currency");
