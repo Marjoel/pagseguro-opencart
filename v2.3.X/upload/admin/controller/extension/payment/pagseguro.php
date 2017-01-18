@@ -107,12 +107,12 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	}
 
 	private function getFreightTypes() {
-			$texts = array(
-				"text_freight_store",
-				"text_freight_pac",
-				"text_freight_sedex",
-				"text_freight_pac_sedex"
-			);
+		$texts = array(
+			"text_freight_store",
+			"text_freight_pac",
+			"text_freight_sedex",
+			"text_freight_pac_sedex"
+		);
 
 		foreach ($texts as $text) {
 			$data[$text] = $this->language->get($text);
