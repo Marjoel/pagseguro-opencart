@@ -15,127 +15,127 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
-	$this->load->language('extension/payment/pagseguro');
+		$this->load->language('extension/payment/pagseguro');
 
-	/* get all texts */
-	$texts = $this->getAllTexts();
-	foreach ($texts as $text) {
-		$data[$text] = $this->language->get($text);
+		/* get all texts */
+		$texts = $this->getAllTexts();
+		foreach ($texts as $text) {
+			$data[$text] = $this->language->get($text);
+		}
+
+		$config = $this->getConfig();
+
+		/* opencart default */
+		$this->document->setTitle($data["heading_title"]);
+		$data["breadcrumbs"] = $this->getBreadcrumbs($data);
+		$data["action"] = $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true);
+		$data["cancel"] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data["header"] = $this->load->controller('common/header');
+		$data["column_left"] = $this->load->controller("common/column_left");
+		$data["footer"] = $this->load->controller("common/footer");
+
+		/* utils */
+		$data["util_fields"] = $this->getFields();
+		$data["util_status"] = $this->getStatus();
+		$data["util_freight"] = $this->getFreightTypes();
+		$data["notification_url"] = $this->getUrlBase() . $config->notification_url;
+		$data["redirect_url"] = $this->getUrlBase() . $config->redirect_url;
+		$data["cancel_url"] = $this->getUrlBase() . $config->cancel_url;
+
+		/* get all fields */
+		$fields = $this->getAllFields();
+		foreach ($fields as $field) {
+			$data[$field] = isset($this->request->post[$field]) ? $this->request->post[$field] : $this->config->get($field);
+		}
+
+		/* if there are errors, show them */
+		$fields = $this->getAllRequiredFields();
+		$fields[] = "warning";
+
+		foreach ($fields as $field) {
+			$data["error_" . $field] = isset($this->error[$field]) ? $this->error[$field] : "";
+		}
+		$this->response->setOutput($this->load->view("extension/payment/pagseguro", $data));
 	}
-
-	$config = $this->getConfig();
-
-	/* opencart default */
-	$this->document->setTitle($data["heading_title"]);
-	$data["breadcrumbs"] = $this->getBreadcrumbs($data);
-	$data["action"] = $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true);
-	$data["cancel"] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'] . '&type=payment', true);
-	$data["header"] = $this->load->controller('common/header');
-	$data["column_left"] = $this->load->controller("common/column_left");
-	$data["footer"] = $this->load->controller("common/footer");
-
-	/* utils */
-	$data["util_fields"] = $this->getFields();
-	$data["util_status"] = $this->getStatus();
-	$data["util_freight"] = $this->getFreightTypes();
-	$data["notification_url"] = $this->getUrlBase() . $config->notification_url;
-	$data["redirect_url"] = $this->getUrlBase() . $config->redirect_url;
-	$data["cancel_url"] = $this->getUrlBase() . $config->cancel_url;
-
-	/* get all fields */
-	$fields = $this->getAllFields();
-	foreach ($fields as $field) {
-		$data[$field] = isset($this->request->post[$field]) ? $this->request->post[$field] : $this->config->get($field);
-	}
-
-	/* if there are errors, show them */
-	$fields = $this->getAllRequiredFields();
-	$fields[] = "warning";
-
-	foreach ($fields as $field) {
-		$data["error_" . $field] = isset($this->error[$field]) ? $this->error[$field] : "";
-	}
-	$this->response->setOutput($this->load->view("extension/payment/pagseguro", $data));
-}
 
 	protected function validate() {
-		if(!$this->user->hasPermission("modify", "extension/payment/pagseguro")) {
-			$this->error["warning"] = $this->language->get("error_permission");
-			return !$this->error;
+			if(!$this->user->hasPermission("modify", "extension/payment/pagseguro")) {
+				$this->error["warning"] = $this->language->get("error_permission");
+				return !$this->error;
+			}
+
+		if(!$this->request->post["pagseguro_min_value_enable"]) {
+			$this->request->post["pagseguro_min_value_enable"] = 0;
 		}
 
-	if(!$this->request->post["pagseguro_min_value_enable"]) {
-		$this->request->post["pagseguro_min_value_enable"] = 0;
-	}
-
-	/* validate required fields */
-	$fields = $this->getAllRequiredFields();
-	foreach ($fields as $field) {
-		if(!$this->request->post["pagseguro_" .$field]) {
-			$this->error[$field] = $this->language->get("error_" . $field);
+		/* validate required fields */
+		$fields = $this->getAllRequiredFields();
+		foreach ($fields as $field) {
+			if(!$this->request->post["pagseguro_" .$field]) {
+				$this->error[$field] = $this->language->get("error_" . $field);
+			}
 		}
+		return !$this->error;
 	}
-	return !$this->error;
-}
 
 	private function getFields() {
 		$this->load->language('customer/customer');
 		$this->load->model('customer/custom_field');
 
-	$fields = array();
+		$fields = array();
 
-	/* get default fields */
-	$default_fields = array(
-		"address_1",
-		"address_2",
-		"telephone",
-		"fax",
-		"company"
-	);
-
-	foreach ($default_fields as $field) {
-		$fields[$field] = $this->language->get("entry_" . $field);
-	}
-
-	/* get custom fields */
-	$custom_fields = $this->model_customer_custom_field->getCustomFields();
-
-	foreach($custom_fields as $field) {
-		$fields[$field["custom_field_id"]] = $field["name"];
-	}
-	return $fields;
-}
-
-	private function getFreightTypes() {
-		$texts = array(
-			"text_freight_store",
-			"text_freight_pac",
-			"text_freight_sedex",
-			"text_freight_pac_sedex"
+		/* get default fields */
+		$default_fields = array(
+			"address_1",
+			"address_2",
+			"telephone",
+			"fax",
+			"company"
 		);
 
-	foreach ($texts as $text) {
-		$data[$text] = $this->language->get($text);
+		foreach ($default_fields as $field) {
+			$fields[$field] = $this->language->get("entry_" . $field);
+		}
+
+		/* get custom fields */
+		$custom_fields = $this->model_customer_custom_field->getCustomFields();
+
+		foreach($custom_fields as $field) {
+			$fields[$field["custom_field_id"]] = $field["name"];
+		}
+		return $fields;
 	}
 
-	return array(
-		"0" => $data["text_freight_store"],
-		"1" => $data["text_freight_pac"],
-		"2" => $data["text_freight_sedex"],
-		"3" => $data["text_freight_pac_sedex"]
-	);
-}
+	private function getFreightTypes() {
+			$texts = array(
+				"text_freight_store",
+				"text_freight_pac",
+				"text_freight_sedex",
+				"text_freight_pac_sedex"
+			);
+
+		foreach ($texts as $text) {
+			$data[$text] = $this->language->get($text);
+		}
+
+		return array(
+			"0" => $data["text_freight_store"],
+			"1" => $data["text_freight_pac"],
+			"2" => $data["text_freight_sedex"],
+			"3" => $data["text_freight_pac_sedex"]
+		);
+	}
 
 	private function getStatus() {
 		$this->load->model("localisation/order_status");
 		$statuses = $this->model_localisation_order_status->getOrderStatuses();
 		$status = array();
 
-	foreach ($statuses as $stats) {
-		$status[$stats["order_status_id"]] = $stats["name"];
+		foreach ($statuses as $stats) {
+			$status[$stats["order_status_id"]] = $stats["name"];
+		}
+		return $status;
 	}
-	return $status;
-}
 
 	private function getConfig() {
 		return (object) parse_ini_file(DIR_SYSTEM . "library/pagseguro/pagseguro-config.ini");
@@ -151,22 +151,22 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	private function getBreadcrumbs($data) {
 		$breadcrumbs = array();
 
-	$breadcrumbs[] = array(
-		"text" => $data["text_home"],
-		"href" => $this->url->link("common/dashboard", "token=" . $this->session->data["token"], true)
-	);
+		$breadcrumbs[] = array(
+			"text" => $data["text_home"],
+			"href" => $this->url->link("common/dashboard", "token=" . $this->session->data["token"], true)
+		);
 
-	$breadcrumbs[] = array(
-		"text" => $data["text_payment"],
-		"href" => $this->url->link('extension/extension', 'token=' . $this->session->data['token'].'&type=payment', true)
-	);
+		$breadcrumbs[] = array(
+			"text" => $data["text_payment"],
+			"href" => $this->url->link('extension/extension', 'token=' . $this->session->data['token'].'&type=payment', true)
+		);
 
-	$breadcrumbs[] = array(
-		"text" => $data["heading_title"],
-		"href" => $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true)
-	);
-	return $breadcrumbs;
-}
+		$breadcrumbs[] = array(
+			"text" => $data["heading_title"],
+			"href" => $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true)
+		);
+		return $breadcrumbs;
+	}
 
 	private function getAllRequiredFields() {
 		return array(
