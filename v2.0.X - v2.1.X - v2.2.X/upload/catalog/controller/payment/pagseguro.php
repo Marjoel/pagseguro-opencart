@@ -1,5 +1,4 @@
 <?php
-require_once DIR_SYSTEM . "library/pagseguro/PagSeguroLibrary.php";
 require_once DIR_SYSTEM . "library/pagseguro/pagseguro.class.php";
 
 class ControllerPaymentPagSeguro extends Controller {
@@ -10,7 +9,6 @@ class ControllerPaymentPagSeguro extends Controller {
 		$data["script"] = $config->script_url;
 		$data["cancel"] = $config->cancel_url;
 		$data["redirect"] = $config->redirect_url;
-		
 		$data["post"] = $config->post_url;
 		$data["delay"] = $config->auto_start_delay;
 		$data["auto_start"] = $config->auto_start;

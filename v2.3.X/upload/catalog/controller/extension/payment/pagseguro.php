@@ -1,23 +1,21 @@
 <?php
-require_once DIR_SYSTEM . "library/pagseguro/PagSeguroLibrary.php";
 require_once DIR_SYSTEM . "library/pagseguro/pagseguro.class.php";
 
-class ControllerPaymentPagSeguro extends Controller {
+class ControllerExtensionPaymentPagSeguro extends Controller {
     public function index() {
-		$this->load->language('extension/payment/pagseguro');
+		$this->load->language("extension/payment/pagseguro");
 		$config = $this->getConfig();
 
 		$data["script"] = $config->script_url;
 		$data["cancel"] = $config->cancel_url;
 		$data["redirect"] = $config->redirect_url;
-
 		$data["post"] = $config->post_url;
 		$data["delay"] = $config->auto_start_delay;
 		$data["auto_start"] = $config->auto_start;
 		$data["loading"] = $this->language->get("text_loading");
 		$data["button"] = $this->language->get("text_button");
 
-        return $this->load->view('extension/payment/pagseguro', $data);
+        return $this->load->view("extension/payment/pagseguro", $data);
     }
 
 	public function order() {

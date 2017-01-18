@@ -8,14 +8,14 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->load->language('extension/payment/pagseguro');
+
 		if(($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model("setting/setting");
 			$this->model_setting_setting->editSetting('pagseguro', $this->request->post);
 			$this->session->data['success'] = $this->language->get("text_success");
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
-
-		$this->load->language('extension/payment/pagseguro');
 
 		/* get all texts */
 		$texts = $this->getAllTexts();

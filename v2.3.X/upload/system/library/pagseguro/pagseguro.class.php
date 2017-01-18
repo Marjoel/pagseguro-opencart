@@ -21,9 +21,12 @@ class PagSeguro {
 		$pagseguro->setShippingAddress($this->getShippingInformation($properties));
 		$pagseguro->setReference($this->getReference($properties));
 		
-		$pagseguro->setRedirectUrl($this->getRedirectUrl($properties, $config));
-		$pagseguro->setNotificationURL($this->getNotificationUrl($config));
+		//$pagseguro->setRedirectUrl($this->getRedirectUrl($properties, $config));
+		//$pagseguro->setNotificationURL($this->getNotificationUrl($config));
 
+		$pagseguro->setRedirectUrl("https://www.ancorastore.com/carrinho/confirmacao");
+		$pagseguro->setNotificationURL("https://www.ancorastore.com/checkout/pagseguro/callback");
+		
 		$products = $this->getProducts($properties);
 		foreach ($products as $product) {
 			$pagseguro->addItem($product);
