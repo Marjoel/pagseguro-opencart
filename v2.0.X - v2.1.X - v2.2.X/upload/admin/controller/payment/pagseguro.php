@@ -5,26 +5,26 @@
 */
 
 class ControllerPaymentPagSeguro extends Controller {
-    private $error = array();
+	private $error = array();
 
-    public function index() {
+	public function index() {
 		if(version_compare(VERSION, "2.2.0.0") < 0) {
-            $ssl = "SSL";
-            $tpl = ".tpl";
-        }
+			$ssl = "SSL";
+			$tpl = ".tpl";
+		}
 		else {
 			$ssl = true;
 			$tpl = "";
 		}
 
-        if(($this->request->server["REQUEST_METHOD"] == "POST") && $this->validate()) {
+		if(($this->request->server["REQUEST_METHOD"] == "POST") && $this->validate()) {
 			$this->load->model("setting/setting");
-            $this->model_setting_setting->editSetting("pagseguro", $this->request->post);
-            $this->session->data["success"] = $this->language->get("text_success");
-            $this->response->redirect($this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl));
-        }
+			$this->model_setting_setting->editSetting("pagseguro", $this->request->post);
+			$this->session->data["success"] = $this->language->get("text_success");
+			$this->response->redirect($this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl));
+		}
 
-        $this->load->language("payment/pagseguro");
+		$this->load->language("payment/pagseguro");
 
 		/* get all texts */
 		$texts = $this->getAllTexts();
@@ -38,10 +38,10 @@ class ControllerPaymentPagSeguro extends Controller {
 		$this->document->setTitle($data["heading_title"]);
 		$data["breadcrumbs"] = $this->getBreadcrumbs($data, $ssl);
 		$data["action"] = $this->url->link("payment/pagseguro", "token=" . $this->session->data["token"], $ssl);
-        $data["cancel"] = $this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl);
-        $data["header"] = $this->load->controller("common/header");
-        $data["column_left"] = $this->load->controller("common/column_left");
-        $data["footer"] = $this->load->controller("common/footer");
+		$data["cancel"] = $this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl);
+		$data["header"] = $this->load->controller("common/header");
+		$data["column_left"] = $this->load->controller("common/column_left");
+		$data["footer"] = $this->load->controller("common/footer");
 
 		/* utils */
 		$data["util_fields"] = $this->getFields();
@@ -64,18 +64,18 @@ class ControllerPaymentPagSeguro extends Controller {
 		foreach ($fields as $field) {
 			$data["error_" . $field] = isset($this->error[$field]) ? $this->error[$field] : "";
 		}
-        $this->response->setOutput($this->load->view("payment/pagseguro".$tpl, $data));
-    }
+		$this->response->setOutput($this->load->view("payment/pagseguro".$tpl, $data));
+	}
 
 	protected function validate() {
 		if(!$this->user->hasPermission("modify", "payment/pagseguro")) {
-            $this->error["warning"] = $this->language->get("error_permission");
+			$this->error["warning"] = $this->language->get("error_permission");
 			return !$this->error;
-        }
+		}
 
 		if(!$this->request->post["pagseguro_min_value_enable"]) {
-            $this->request->post["pagseguro_min_value_enable"] = 0;
-        }
+			$this->request->post["pagseguro_min_value_enable"] = 0;
+		}
 
 		/* validate required fields */
 		$fields = $this->getAllRequiredFields();
@@ -84,15 +84,15 @@ class ControllerPaymentPagSeguro extends Controller {
 				$this->error[$field] = $this->language->get("error_" . $field);
 			}
 		}
-        return !$this->error;
-    }
+		return !$this->error;
+	}
 
 	private function getFields() {
 		if(version_compare(VERSION, "2.1.0.1") < 0) {
-            $this->load->language("sale/customer");
+			$this->load->language("sale/customer");
 			$this->load->model("sale/custom_field");
 			$custom_fields = $this->model_sale_custom_field->getCustomFields();
-        }
+		}
 		else {
 			$this->load->language("customer/customer");
 			$this->load->model("customer/custom_field");
@@ -149,7 +149,7 @@ class ControllerPaymentPagSeguro extends Controller {
 		foreach ($statuses as $stats) {
 			$status[$stats["order_status_id"]] = $stats["name"];
 		}
-        return $status;
+		return $status;
 	}
 
 	private function getConfig() {
@@ -166,20 +166,20 @@ class ControllerPaymentPagSeguro extends Controller {
 	private function getBreadcrumbs($data, $ssl) {
 		$breadcrumbs = array();
 
-        $breadcrumbs[] = array(
-            "text" => $data["text_home"],
-            "href" => $this->url->link("common/dashboard", "token=" . $this->session->data["token"], $ssl)
-        );
+		$breadcrumbs[] = array(
+			"text" => $data["text_home"],
+			"href" => $this->url->link("common/dashboard", "token=" . $this->session->data["token"], $ssl)
+		);
 
-        $breadcrumbs[] = array(
-            "text" => $data["text_payment"],
-            "href" => $this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl)
-        );
+		$breadcrumbs[] = array(
+			"text" => $data["text_payment"],
+			"href" => $this->url->link("extension/payment", "token=" . $this->session->data["token"], $ssl)
+		);
 
-        $breadcrumbs[] = array(
-            "text" => $data["heading_title"],
-            "href" => $this->url->link("payment/pagseguro", "token=" . $this->session->data["token"], $ssl)
-        );
+		$breadcrumbs[] = array(
+			"text" => $data["heading_title"],
+			"href" => $this->url->link("payment/pagseguro", "token=" . $this->session->data["token"], $ssl)
+		);
 		return $breadcrumbs;
 	}
 
