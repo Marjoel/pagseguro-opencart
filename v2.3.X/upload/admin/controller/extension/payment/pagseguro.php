@@ -59,10 +59,10 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	}
 
 	protected function validate() {
-			if(!$this->user->hasPermission("modify", "extension/payment/pagseguro")) {
-				$this->error["warning"] = $this->language->get("error_permission");
-				return !$this->error;
-			}
+		if(!$this->user->hasPermission("modify", "extension/payment/pagseguro")) {
+			$this->error["warning"] = $this->language->get("error_permission");
+			return !$this->error;
+		}
 
 		if(!$this->request->post["pagseguro_min_value_enable"]) {
 			$this->request->post["pagseguro_min_value_enable"] = 0;
