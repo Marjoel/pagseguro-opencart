@@ -266,6 +266,7 @@ class ControllerPaymentPagSeguro extends Controller {
 			"text_edit_order_status",
 			"text_edit_settings",
 			"text_register",
+			"text_support",
 			"help_freight",
 			"help_min_value_enable",
 			"help_token",

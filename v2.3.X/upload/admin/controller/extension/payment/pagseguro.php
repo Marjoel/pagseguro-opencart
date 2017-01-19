@@ -8,13 +8,13 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/payment/pagseguro');
+		$this->load->language("extension/payment/pagseguro");
 
-		if(($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if(($this->request->server["REQUEST_METHOD"] == "POST") && $this->validate()) {
 			$this->load->model("setting/setting");
-			$this->model_setting_setting->editSetting('pagseguro', $this->request->post);
-			$this->session->data['success'] = $this->language->get("text_success");
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->model_setting_setting->editSetting("pagseguro", $this->request->post);
+			$this->session->data["success"] = $this->language->get("text_success");
+			$this->response->redirect($this->url->link("extension/extension", "token=" . $this->session->data["token"] . "&type=payment", true));
 		}
 
 		/* get all texts */
@@ -28,9 +28,9 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 		/* opencart default */
 		$this->document->setTitle($data["heading_title"]);
 		$data["breadcrumbs"] = $this->getBreadcrumbs($data);
-		$data["action"] = $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true);
-		$data["cancel"] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'] . '&type=payment', true);
-		$data["header"] = $this->load->controller('common/header');
+		$data["action"] = $this->url->link("extension/payment/pagseguro", "token=" . $this->session->data["token"], true);
+		$data["cancel"] = $this->url->link("extension/payment", "token=" . $this->session->data["token"] . "&type=payment", true);
+		$data["header"] = $this->load->controller("common/header");
 		$data["column_left"] = $this->load->controller("common/column_left");
 		$data["footer"] = $this->load->controller("common/footer");
 
@@ -79,8 +79,8 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	}
 
 	private function getFields() {
-		$this->load->language('customer/customer');
-		$this->load->model('customer/custom_field');
+		$this->load->language("customer/customer");
+		$this->load->model("customer/custom_field");
 
 		$fields = array();
 
@@ -142,7 +142,7 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 	}
 
 	private function getUrlBase() {
-		if (isset($this->request->server['HTTPS'])) {
+		if (isset($this->request->server["HTTPS"])) {
 			return HTTPS_CATALOG;
 		}
 		return HTTP_CATALOG;
@@ -158,12 +158,12 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 
 		$breadcrumbs[] = array(
 			"text" => $data["text_payment"],
-			"href" => $this->url->link('extension/extension', 'token=' . $this->session->data['token'].'&type=payment', true)
+			"href" => $this->url->link("extension/extension", "token=" . $this->session->data["token"]."&type=payment", true)
 		);
 
 		$breadcrumbs[] = array(
 			"text" => $data["heading_title"],
-			"href" => $this->url->link('extension/payment/pagseguro', 'token=' . $this->session->data['token'], true)
+			"href" => $this->url->link("extension/payment/pagseguro", "token=" . $this->session->data["token"], true)
 		);
 		return $breadcrumbs;
 	}
@@ -251,6 +251,7 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 			"text_edit_order_status",
 			"text_edit_settings",
 			"text_register",
+			"text_support",
 			"help_freight",
 			"help_min_value_enable",
 			"help_token",

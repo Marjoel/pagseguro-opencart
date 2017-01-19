@@ -15,6 +15,10 @@
 		margin-top: 8.5px;
 		display: inline-block;
 	}
+
+	#pagseguro-support {
+		margin: 30px 35px -35px 35px;
+	}
 </style>
 
 <?php echo $header; ?>
@@ -54,6 +58,10 @@
 			<div id="pagseguro-register">
 				<img src="view/image/payment/pagseguro.png">
 				<p><?php echo $text_register; ?></p>
+			</div>
+
+			<div id="pagseguro-support">
+				<p><?php echo $text_support; ?></p>
 			</div>
 
 			<div class="panel-body">
