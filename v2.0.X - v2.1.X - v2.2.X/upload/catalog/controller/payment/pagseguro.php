@@ -179,7 +179,7 @@ class ControllerPaymentPagSeguro extends Controller {
 			}
 		}
 		else {
-			$street = $order_info["shipping_".$config->config_address];
+			$street = $order_info["shipping_" . $config->config_address];
 		}
 		return $street;
 	}
@@ -195,7 +195,7 @@ class ControllerPaymentPagSeguro extends Controller {
 			}
 		}
 		else {
-			$number = $order_info["shipping_".$config->config_number];
+			$number = $order_info["shipping_" . $config->config_number];
 		}
 		return $number;
 	}
@@ -215,7 +215,7 @@ class ControllerPaymentPagSeguro extends Controller {
 				$complement = "";
 			}
 			else {
-				$complement = $order_info["shipping_".$config->config_complement];
+				$complement = $order_info["shipping_" . $config->config_complement];
 			}
 		}
 		return $complement;
@@ -232,7 +232,7 @@ class ControllerPaymentPagSeguro extends Controller {
 			}
 		}
 		else {
-			$district = $order_info["shipping_".$config->config_neighborhood];
+			$district = $order_info["shipping_" . $config->config_neighborhood];
 		}
 		return $district;
 	}
