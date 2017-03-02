@@ -1,5 +1,5 @@
 <?php
-$_["text_title"] 				= "<img src=\"admin/view/image/payment/pagseguro.png\" alt=\"PagSeguro\" title=\"PagSeguro\" height=\"20px\">";
+$_["text_title"] 				= "<img src=\"https://www.marjoel.com/github/pagseguro/image/pagseguro.png\" alt=\"PagSeguro\" title=\"PagSeguro\" height=\"20px\">";
 $_["text_loading"] 				= "Carregando...";
 $_["text_button"] 				= "Pagar com PagSeguro";
 

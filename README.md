@@ -14,6 +14,7 @@
 
 | Versão | Notas | Compatibilidade |
 | ------ | ----- | --------------- |
+| 1.0.1  | Resolvendo bug da imagem do PagSeguro ao selecionar o método de pagamento. | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
 | 1.0    | Integração com as APIs de pagamento e notificação. | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
 
 ## To dos
