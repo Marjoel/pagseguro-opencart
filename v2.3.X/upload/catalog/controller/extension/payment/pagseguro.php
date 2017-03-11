@@ -96,28 +96,18 @@ class ControllerExtensionPaymentPagSeguro extends Controller {
 					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_approved_payment"), $comment, $alert);
 					break;
 				case "CANCELLED":
-					if($orderId) {
-						$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_canceled_payment"), $comment, $alert);
-					}
+					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_canceled_payment"), $comment, $alert);
 					break;
 				case "IN_DISPUTE":
-					if($orderId) {
-						$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_payment_dispute"), $comment, $alert);
-					}
+					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_payment_dispute"), $comment, $alert);
 					break;
 				case "REFUNDED":
-					if($orderId) {
-						$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_reversed_payment"), $comment, $alert);
-					}
+					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_reversed_payment"), $comment, $alert);
 					break;
 				case "SELLER_CHARGEBACK":
-					if($orderId) {
-						$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_chargeback_payment"), $comment, $alert);
-					}
+					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_chargeback_payment"), $comment, $alert);
 				case "CONTESTATION":
-					if($orderId) {
-						$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_chargeback_payment"), $comment, $alert);
-					}
+					$this->model_checkout_order->addOrderHistory($reference, $this->config->get("pagseguro_order_chargeback_payment"), $comment, $alert);
 					break;
 			}
 		}
