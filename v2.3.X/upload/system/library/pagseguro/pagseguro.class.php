@@ -7,7 +7,7 @@ class PagSeguro {
 
 	public function getConfig() {
 		return (object) parse_ini_file("pagseguro-config.ini");
-	} 
+	}
 
 	public function createOrder($properties, $config) {
 		PagSeguroConfig::setApplicationCharset("UTF-8");
@@ -132,7 +132,7 @@ class PagSeguro {
 	}
 
 	private function getRedirectUrl($properties, $config) {
-		return $config->redirect_url . "&orderId=" . strval($properties["order_id"]);
+		return $config->redirect_url;
 	}
 
 	private function getCancelUrl($config) {

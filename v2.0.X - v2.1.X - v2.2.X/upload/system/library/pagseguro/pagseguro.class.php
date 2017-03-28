@@ -132,7 +132,7 @@ class PagSeguro {
 	}
 
 	private function getRedirectUrl($properties, $config) {
-		return $config->redirect_url . "&orderId=" . strval($properties["order_id"]);
+		return $config->redirect_url;
 	}
 
 	private function getCancelUrl($config) {
