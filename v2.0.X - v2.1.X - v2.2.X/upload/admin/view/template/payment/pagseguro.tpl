@@ -19,6 +19,10 @@
 	#pagseguro-support {
 		margin: 30px 35px -35px 35px;
 	}
+
+	#pagseguro-copyright {
+		text-align: center;
+	}
 </style>
 
 <?php echo $header; ?>
@@ -450,6 +454,11 @@
 							</div>
 						</div>
 					</div>
+
+                    <div id="pagseguro-copyright">
+                        <p>Módulo <a href="https://github.com/Marjoel/pagseguro-opencart" target="_blank">PagSeguro</a> by <a href="https://www.marjoel.com" target="_blank">Marjoel Moreira</a></p>
+                        <p>Versão <?php echo $version; ?></p>
+                    </div>
 				</form>
 			</div>
 		</div>

@@ -9,8 +9,8 @@
 <div id="pagseguro">
 	<div class="buttons">
 		<div class="pull-right">
-			<input type="submit" value="<?php echo $button; ?>" class="btn btn-primary" data-order="" onclick="startPagSeguro()" />
-			<span style="display:none;"><?php echo $loading; ?></span>
+			<input style="display:none;" type="submit" value="<?php echo $button; ?>" class="btn btn-primary" data-order="" onclick="startPagSeguro()" />
+			<span><?php echo $loading; ?></span>
 		</div>
 	</div>
 </div>
@@ -23,7 +23,9 @@
 		dataType: 'json',
 		success: function(json) {
 			$('#pagseguro input').attr('data-order', json.code);
-			
+			$('#pagseguro span').hide();
+			$('#pagseguro input').show();
+
 			<?php if($auto_start) { ?>
 				setTimeout(function() {
 					startPagSeguro();

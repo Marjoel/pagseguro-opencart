@@ -14,6 +14,7 @@
 
 | Versão | Notas | Compatibilidade |
 | ------ | ----- | --------------- |
+| 1.0.4  | Removendo bug da mensagem "Ops, Houve um problema e não foi possível exibir a página.". | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
 | 1.0.3  | Removendo bug da mensagem "Ops, Houve um problema e não foi possível exibir a página.". | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
 | 1.0.2  | Removendo algumas validações inválidas. | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
 | 1.0.1  | Resolvendo bug da imagem do PagSeguro ao selecionar o método de pagamento. | 2.0.X, 2.1.X, 2.2.X, 2.3.X |
@@ -21,6 +22,7 @@
 
 ## To dos
 
+- [ ] [Adicionar funcionalidade de sandbox do PagSeguro.](https://github.com/Marjoel/pagseguro-opencart/issues/4 "Issue aberta")
 - [ ] Adicionar funcionalidade de oferecer desconto quando o PagSeguro for escolhido como forma de pagamento.
 
 ## Contribua

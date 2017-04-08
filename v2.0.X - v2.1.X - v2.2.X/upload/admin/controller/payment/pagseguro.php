@@ -50,6 +50,7 @@ class ControllerPaymentPagSeguro extends Controller {
 		$data["notification_url"] = $this->getUrlBase() . $config->notification_url;
 		$data["redirect_url"] = $this->getUrlBase() . $config->redirect_url;
 		$data["cancel_url"] = $this->getUrlBase() . $config->cancel_url;
+		$data["version"] = $config->version;
 
 		/* get all fields */
 		$fields = $this->getAllFields();
